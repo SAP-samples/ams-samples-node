@@ -1,0 +1,29 @@
+{
+  "name": "ams-cap-nodejs-bookshop",
+  "version": "2.2.0",
+  "description": "A simple CAP project demonstrating the integration of AMS into CAP.",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@cap-js/sqlite": "^1.7.4",
+    "@sap/ams": "^2.2.0",
+    "@sap/cds": "^8",
+    "@sap/xssec": "^4",
+    "express": "^4",
+    "passport": "^0"
+  },
+  "devDependencies": {
+    "@sap/ams-dev": "^2",
+    "@sap/cds-dk": "^8.7.3",
+    "jest": "^29.7.0"
+  },
+  "scripts": {
+    "jest": "DEBUG=ams npx jest",
+    "test": "npm run jest",
+    "start": "cds-serve"
+  },
+  "sapux": [
+    "app/admin-books",
+    "app/browse"
+  ]
+}

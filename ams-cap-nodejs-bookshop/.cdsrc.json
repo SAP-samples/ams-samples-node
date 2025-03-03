@@ -1,0 +1,60 @@
+{
+    "requires": {
+        "auth": {
+            "[development]": {
+                "kind": "mocked",
+                "users": {
+                    "bob": {
+                        "policies": [
+                            "cap.admin",
+                            "cap.Reader"
+                        ]
+                    },
+                    "carol": {
+                        "policies": [
+                            "local.Zealot"
+                        ]
+                    },
+                    "dave": {
+                        "policies": [
+                            "local.JuniorReader"
+                        ]
+                    },
+                    "erin": {
+                        "policies": [
+                            "local.BestsellerReader"
+                        ]
+                    },
+                    "fred": {
+                        "policies": [
+                            "local.Zealot",
+                            "local.BestsellerReader"
+                        ]
+                    }
+                }
+            },
+            "[production]": {
+                "kind": "ias",
+                "ams": {
+                    "cache": {
+                        "TTL": 15000
+                    }
+                }
+            }
+        },
+        "db": {
+            "[development]": {
+                "kind": "sqlite",
+                "credentials": {
+                    "url": ":memory:"
+                }
+            },
+            "[production]": {
+                "kind": "sqlite",
+                "credentials": {
+                    "url": "db.sqlite"
+                }
+            }
+        }
+    }
+}

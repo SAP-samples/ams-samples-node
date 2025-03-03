@@ -1,0 +1,104 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "AMS CAP Node.js Bookshop Tour",
+  "steps": [
+    {
+      "file": "ams-cap-nodejs-bookshop/package.json",
+      "description": "This code tour explains the ams-specific parts of this CAP project which is a plain old bookshop sample.",
+      "line": 2
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/package.json",
+      "description": "By running `cds add ams`, the @sap/ams runtime plugin has already been installed.",
+      "line": 9
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/package.json",
+      "description": "... and also the `@sap/ams-dev` dev-time plugin which is required to use policies without deploying them to SAP Identity service first, e.g. for unit testing.",
+      "line": 16
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/package.json",
+      "description": "As AMS is typically used with SAP Identity Service authentication, `cds add ams` will run `cds add ias` as a pre-step. This adds `@sap/xssec` which is used to validate IAS tokens by the built-in authentication middleware of cds.",
+      "line": 11
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/srv/admin-service.cds",
+      "description": "Let's see first how AMS can be used for role-based authorization.\nFor example, the AdminService requires the *admin* role to access any of its entities.",
+      "line": 2
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/ams/dcl/cap/basePolicies.dcl",
+      "description": "In AMS, you use authorization policies to assign roles to users.\nFor example, the *admin* policy is a policy that grants this role to any user to which the policy is assigned.\n\nWhen using AMS, the application is deployed together with a set of base policies.\nThe file you see is the default location for the base policies.\nThe AMS plugin generates it automatically, with one base policy for each role required in the cds model",
+      "line": 11
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/.cdsrc.json",
+      "description": "The sample uses *mocked* authentication during development and for tests.",
+      "line": 5
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/.cdsrc.json",
+      "description": "You can use the *policies* array of each mocked user to assign AMS policies to it.\nMake sure to use fully-qualified policy names, i.e. names that include the DCL package in which the policy is located.\nThe default package for the base policies is *cap* because, by default, they are defined in the file `ams/dcl/cap/basePolicies.dcl`.",
+      "line": 19
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/test/admin-service.test.js",
+      "description": "This is an example how to write a test against the server to validate that *dave* has indeed access to the AdminService thanks to the policy assignment.",
+      "line": 31
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/test/admin-service.test.js",
+      "description": "On the other hand, *fred* should have no access as the policy is not assigned to him.",
+      "line": 50
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/ams/dcl/schema.dcl",
+      "description": "Finally, we will take a look at instance-based authorization via AMS which is the feature where it really shines.\nInstance-based authorization means that access to resources can be controlled in a non-binary way. It means access can be granted but is restricted to *some* entities of a resource, e.g. those created in 2023.\n\nFirst, the authorization model needs to be defined with a set of attributes that can be used to filter the set of entities for which access is granted.\n\nIn AMS, the `schema.dcl` holds this information.\nIt defines a list of attributes and their data type.\nIt lies in the DCL root folder which, by default, is `ams/dcl`."
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/test/admin-service.test.js",
+      "description": "We expect *alice* to also have access even though the *admin* policy is not assigned to her. This is because she is a default mocked user to which CAP already assigns the *admin* role via the *roles* array. You can validate this via `cds env requires.auth.users.alice`.\n\nAs a rule of thumb, while AMS policies can grant roles, roles can still come from other source, too, such as custom authentication middlewares.",
+      "line": 13
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/ams/dcl/schema.dcl",
+      "description": "It is possible to nest schema attributes.\n\nThis is useful to group attributes. For example, if it is necessary to filter on the name and description of both books and authors, one could go with four attributes called `authorName`, `authorDescription`, `bookName`, `bookDescription` *or*: one can use nesting to express them as `author.name`, `author.description`, `book.name`, `book.description` which might give a more structured feel.",
+      "line": 12
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/srv/authorizations.cds",
+      "description": "Next, we need to map the AMS attributes to elements in the cds model. If a user has been granted only instance-based access to resources, the AMS plugin will generate ad-hoc CQL conditions for those elements that are used by cds to filter the result set.\n\nThe mapping is implemented with the `ams.attributes` annotation which is a key : value map in which the keys are AMS attributes and the values are cds expressions for the target element. An expression is used to denote the cds elements instead of strings to have language server support and prevent typos.",
+      "line": 6
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/srv/authorizations.cds",
+      "description": "For example, restrictions on the AMS attribute *description* from the AMS schema should be used to filter the *descr* element of the cds model.\n\nWhile the annotation can also be used on entity level, in this example, we showcase annotating cds elements of a *media* aspect. Theoretically, such an aspect could be shared by additional kinds of media besides books, so that the filters would also be applied when accessing that kind of media and not just books. Aspects are an elegant mechanism to spread AMS annotations to many entities for cross-cutting attributes such as org unit or country code. Typically, common attributes like that are the primary use case for instance-based authorization.",
+      "line": 4
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/srv/authorizations.cds",
+      "description": "It is possible to reference cds elements on association paths, too.\n\nFor example, if AMS adds restrictions based on the genre, it can be mapped to the *name* element of the *genre* association, even though it is not a direct element of the entity which is accessed.",
+      "line": 5
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/ams/dcl/cap/basePolicies.dcl",
+      "description": "To give users fine-grained access via AMS, the role assignments of the base policies are extended with a `WHERE` condition that contains attributes from the AMS schema.\n\nBy specifying that an attribute `IS NOT RESTRICTED`, the base policy itself still grants access that is not restricted by this attribute. However, administrators of the customer can use it as a base on which they can create additional admin policies at runtime. In such policies, they can freely choose the exact condition over the attribute. We will see an example in the next step.",
+      "line": 7
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/ams/dcl/local/adminPolicies.dcl",
+      "description": "This *Zealot* policy is an example admin policy that uses the base policy from the previous step to define a new policy with a custom condition on the *description* attribute.\n\nNote how this file is located in `ams/dcl/local`. The *local* package in DCL has a special semantic. It is meant for DCL files with policies that are only relevant for testing but not for production. Its policies are ignored during the base policy upload, even if they are contained during the upload.\n\nHere, we have created fictitious admin policies inside this package to test whether extensions of base policies work as expected.",
+      "line": 13
+    },
+    {
+      "file": "ams-cap-nodejs-bookshop/test/cat-service.test.js",
+      "description": "This unit test asserts that user *carol* who has that admin policy assigned, can read the books from the *CatalogService*.\n\nBut in the response, she must see only the one book whose *description* fulfills the attribute filter.",
+      "line": 69
+    },
+    {
+      "title": "Deploying Policies",
+      "description": "Let's conclude this tour with a discussion about deployment.\n\nSince `@sap/cds-dk 8.6.0`, the availability of `cds add ams` and `cds add ias` has eliminated practically all manual configuration effort for deploying projects that use AMS.\n\nIn particular, an *ams policy deployer application* will be created automatically by the AMS plugin during `cds build` in `gen/policies`. The deployment artefacts created via `cds add mta`, `cds add helm` or `cds add cf-manifest` will automatically contain an entry for it to make sure it gets deployed alongside the application. This way, the authorization policies will be available in the SAP Identity Service administration of your application after deployment."
+    }
+  ]
+}
