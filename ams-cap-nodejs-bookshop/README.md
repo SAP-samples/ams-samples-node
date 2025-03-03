@@ -1,7 +1,5 @@
-# Minimal Version before AMS
+# Minimal Version with AMS
 
-This branch is a minimal version of the sample from the [main](../../tree/main) branch used as basis for demos.
+This branch is a minimal version of the sample from the [main](../../tree/main) branch shown in demos.
 
-It shows the project before adding **AMS**.
-
-For comparison, the [cap_minimal](../../cap_minimal/ams-cap-nodejs-bookshop) branch shows the minimal project after adding **AMS**.
+It shows the [cap_minimal_before_ams](../../tree/cap_minimal_before_ams) branch after adding **AMS**.

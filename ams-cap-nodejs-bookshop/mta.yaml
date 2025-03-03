@@ -1,0 +1,105 @@
+_schema-version: 3.3.0
+ID: ams-cap-nodejs-bookshop
+version: 2.0.1
+description: "A simple CAP project demonstrating the integration of AMS into CAP."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+        - npx cds deploy -2 sqlite
+        - mv db.sqlite gen/srv
+modules:
+  - name: ams-cap-nodejs-bookshop-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+      readiness-health-check-type: http
+      readiness-health-check-http-endpoint: /health
+      routes:
+        - route: "${default-url}"
+        - route: "${default-host}.cert.${default-domain}"
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+          srv-cert-url: '${protocol}://${default-host}.cert.${default-domain}'
+    requires:
+      - name: ams-cap-nodejs-bookshop-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            app-identifier: srv
+    deployed-after:
+      - ams-cap-nodejs-bookshop-ams-policies-deployer
+    properties:
+      AMS_DCL_ROOT: ams/dcl
+
+  - name: ams-cap-nodejs-bookshop-ams-policies-deployer
+    type: javascript.nodejs
+    path: gen/policies
+    parameters:
+      buildpack: nodejs_buildpack
+      no-route: true
+      no-start: true
+      tasks:
+        - name: deploy-dcl
+          command: npm start
+          memory: 512M
+    requires:
+      - name: ams-cap-nodejs-bookshop-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            app-identifier: ams-policy-deployer
+
+  - name: ams-cap-nodejs-bookshop
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: ams-cap-nodejs-bookshop-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            app-identifier: approuter
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+
+resources:
+  - name: ams-cap-nodejs-bookshop-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: identity
+      service-name: ams-cap-nodejs-bookshop-auth
+      service-plan: application
+      config:
+        display-name: ams-cap-nodejs-bookshop
+        authorization:
+          enabled: true
+        oauth2-configuration:
+          redirect-uris:
+            - ~{app-api/app-protocol}://~{app-api/app-uri}/login/callback
+          post-logout-redirect-uris:
+            - ~{app-api/app-protocol}://~{app-api/app-uri}/*/logout.html
+    requires:
+      - name: app-api

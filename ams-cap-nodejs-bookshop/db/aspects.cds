@@ -1,4 +1,4 @@
-using { sap.capire.bookshop.Genres } from './schema';
+using { sap.capire.bookshop.Genres } from '../db/schema';
 
 aspect stocked {
     stock: Integer;
