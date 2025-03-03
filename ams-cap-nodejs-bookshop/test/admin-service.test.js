@@ -1,7 +1,7 @@
 const cds = require('@sap/cds')
 
 describe('AdminService', () => {
-  const { GET, axios } = cds.test()
+  const { GET, axios } = cds.test ()
 
   describe('called by alice (admin role mocked directly but not via policy)', () => {
     beforeAll(() => {
@@ -21,23 +21,23 @@ describe('AdminService', () => {
     })
   })   
   
-  describe('called by bob (cap.admin policy assigned)', () => {
-    beforeAll(() => {
-      axios.defaults.auth = { username: 'bob', password: '' }
-    })
+  // describe('called by bob (cap.admin policy assigned)', () => {
+  //   beforeAll(() => {
+  //     axios.defaults.auth = { username: 'bob', password: '' }
+  //   })
 
-    it('/Books should return all Books', async () => {
-      const { status, data } = await GET `/admin/Books` 
-      expect(status).toBe(200)
-      expect(data.value?.length).toBe(5)
-    })
+  //   it('/Books should return all Books', async () => {
+  //     const { status, data } = await GET `/admin/Books` 
+  //     expect(status).toBe(200)
+  //     expect(data.value?.length).toBe(5)
+  //   })
 
-    it('/Authors should return all Authors', async () => {
-      const { status, data } = await GET `/admin/Authors` 
-      expect(status).toBe(200)
-      expect(data.value?.length).toBe(4)
-    })
-  })  
+  //   it('/Authors should return all Authors', async () => {
+  //     const { status, data } = await GET `/admin/Authors` 
+  //     expect(status).toBe(200)
+  //     expect(data.value?.length).toBe(4)
+  //   })
+  // })  
 
   describe('called by fred (no admin)', () => {
     beforeAll(() => {

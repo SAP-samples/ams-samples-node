@@ -4,42 +4,15 @@
             "[development]": {
                 "kind": "mocked",
                 "users": {
-                    "bob": {
-                        "policies": [
-                            "cap.admin",
-                            "cap.Reader"
-                        ]
-                    },
                     "carol": {
-                        "policies": [
-                            "local.Zealot"
-                        ]
-                    },
-                    "dave": {
-                        "policies": [
-                            "local.JuniorReader"
-                        ]
-                    },
-                    "erin": {
-                        "policies": [
-                            "local.BestsellerReader"
-                        ]
-                    },
-                    "fred": {
-                        "policies": [
-                            "local.Zealot",
-                            "local.BestsellerReader"
+                        "roles": [
+                            "Reader"
                         ]
                     }
                 }
             },
             "[production]": {
-                "kind": "ias",
-                "ams": {
-                    "cache": {
-                        "TTL": 15000
-                    }
-                }
+                "kind": "ias"
             }
         },
         "db": {
