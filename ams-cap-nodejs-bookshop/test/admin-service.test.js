@@ -1,7 +1,7 @@
 const cds = require('@sap/cds')
 
 describe('AdminService', () => {
-  const { GET, axios } = cds.test()
+  const { GET, axios } = cds.test ()
 
   describe('called by alice (admin role mocked directly but not via policy)', () => {
     beforeAll(() => {

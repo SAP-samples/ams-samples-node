@@ -1,5 +1,5 @@
 using { Currency, managed, sap } from '@sap/cds/common';
-using { stocked, media } from '../srv/aspects';
+using { stocked, media } from './aspects';
 namespace sap.capire.bookshop;
 
 
@@ -7,6 +7,7 @@ entity Books : managed, media, stocked {
   key ID : Integer;
   @mandatory title  : localized String(111);
   @mandatory author : Association to Authors;
+  descr: localized String(1111);
   price  : Decimal;
   currency : Currency;
   image : LargeBinary @Core.MediaType : 'image/png';

@@ -1,7 +1,6 @@
-using { stocked, media } from './aspects';
+using { stocked, media } from '../db/aspects';
 
 annotate media with @ams.attributes: {
-    description: (descr),
     genre: (genre.name)
 };
 annotate stocked with @ams.attributes: {

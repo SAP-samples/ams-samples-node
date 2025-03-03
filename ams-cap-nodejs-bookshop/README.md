@@ -1,3 +1,9 @@
+# Minimal Version with AMS
+
+This branch is a minimal version of the sample from the [main](../../tree/main) branch shown in demos.
+
+It shows the [cap_minimal_before_ams](../../tree/cap_minimal_before_ams) branch after adding **AMS**.
+
 # CAP Bookshop Sample with SAP Cloud Identity Services
 
 This sample uses the [CAP bookshop sample](https://github.com/SAP-samples/cloud-cap-samples/tree/main/bookshop) to demonstrate authentication via [SAP Cloud Identity Services](https://help.sap.com/docs/identity-authentication?locale=en-US) (SCI) and [policy based authorization](https://help.sap.com/docs/identity-authentication/identity-authentication/configuring-authorization-policies?locale=en-US) via its Authorization Management Service (AMS) component.

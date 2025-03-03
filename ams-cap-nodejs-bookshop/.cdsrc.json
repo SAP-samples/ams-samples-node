@@ -11,8 +11,8 @@
                         ]
                     },
                     "carol": {
-                        "policies": [
-                            "local.Zealot"
+                        "roles": [
+                            "Reader"
                         ]
                     },
                     "dave": {
@@ -27,19 +27,14 @@
                     },
                     "fred": {
                         "policies": [
-                            "local.Zealot",
-                            "local.BestsellerReader"
+                            "local.JuniorReader",
+                            "local.BestsellerReader"                            
                         ]
                     }
                 }
             },
             "[production]": {
-                "kind": "ias",
-                "ams": {
-                    "cache": {
-                        "TTL": 15000
-                    }
-                }
+                "kind": "ias"
             }
         },
         "db": {

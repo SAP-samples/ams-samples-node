@@ -6,5 +6,4 @@ aspect stocked {
 
 aspect media {
     genre: Association to Genres;
-    descr: localized String(1111);
 }
