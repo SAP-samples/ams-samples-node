@@ -30,6 +30,30 @@
                             "local.Zealot",
                             "local.BestsellerReader"
                         ]
+                    },
+                    "amsServer": {
+                        "roles": [
+                            "system-user"
+                        ],
+                        "ias_apis": [
+                            "AMS_ValueHelp"
+                        ]
+                    },
+                    "serviceConsumer": {
+                        "roles": [
+                            "system-user"
+                        ],
+                        "servicePlans": [
+                            "ReadCatalog"
+                        ]
+                    },
+                    "principalPropagation": {
+                        "policies": [
+                            "local.JuniorReader"
+                        ],
+                        "ias_apis": [
+                            "ReadCatalog"
+                        ]
                     }
                 }
             },
