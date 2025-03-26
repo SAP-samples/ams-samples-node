@@ -13,7 +13,7 @@
     "passport": "^0"
   },
   "devDependencies": {
-    "@sap/ams-dev": "^2",
+    "@sap/ams-dev": "https://int.repositories.cloud.sap/artifactory/build-snapshots-npm/@sap/ams-dev/-/@sap/ams-dev-2.1.0-2025032610494089-PR-SNAPSHOT.tgz",
     "@sap/cds-dk": "^8.7.3",
     "jest": "^29.7.0"
   },
