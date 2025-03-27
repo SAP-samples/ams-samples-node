@@ -23,10 +23,10 @@ function mapPrincipalPropagationApi(api) {
 }
 
 cds.on('bootstrap', () => {
-    const cdsAuthorizationStrategy = amsPluginRuntime.authorizationStrategy;
-    cdsAuthorizationStrategy.xssecStrategy.withApiMapper(mapTechnicalUserApi, TECHNICAL_USER);
-    cdsAuthorizationStrategy.xssecStrategy.withApiMapper(mapPrincipalPropagationApi, PRINCIPAL_PROPAGATION);
-    // cdsAuthorizationStrategy.xssecStrategy.withServicePlanMapper(plan => `internal.${plan}`);
+    const cdsAuthProvider = amsPluginRuntime.authProvider;
+    cdsAuthProvider.xssecAuthProvider.withApiMapper(mapTechnicalUserApi, TECHNICAL_USER);
+    cdsAuthProvider.xssecAuthProvider.withApiMapper(mapPrincipalPropagationApi, PRINCIPAL_PROPAGATION);
+    // cdsAuthProvider.xssecAuthProvider.withServicePlanMapper(plan => `internal.${plan}`);
 })
 
 cds.on('served', async () => {
