@@ -1,9 +1,31 @@
 const cds = require('@sap/cds');
-const { cap: { amsPluginRuntime } } = require("@sap/ams");
+const { technicalUserFlows: { TECHNICAL_USER, PRINCIPAL_PROPAGATION }, cap: { amsPluginRuntime } } = require("@sap/ams");
+
+const TECHNICAL_USER_APIS = [
+    "ReadCatalog"
+]
+
+const PRINCIPAL_PROPAGATION_APIS = [
+    "AMS_ValueHelp",
+    "ReadCatalog"
+]
+
+function mapTechnicalUserApi(api) {
+    if (TECHNICAL_USER_APIS.includes(api)) {
+        return `internal.${api}`;
+    }
+}
+
+function mapPrincipalPropagationApi(api) {
+    if (PRINCIPAL_PROPAGATION_APIS.includes(api)) {
+        return `internal.${api}`;
+    }
+}
 
 cds.on('bootstrap', () => {
     const cdsAuthorizationStrategy = amsPluginRuntime.authorizationStrategy;
-    cdsAuthorizationStrategy.xssecStrategy.withApiMapper(api => `internal.${api}`);
+    cdsAuthorizationStrategy.xssecStrategy.withApiMapper(mapTechnicalUserApi, TECHNICAL_USER);
+    cdsAuthorizationStrategy.xssecStrategy.withApiMapper(mapPrincipalPropagationApi, PRINCIPAL_PROPAGATION);
     // cdsAuthorizationStrategy.xssecStrategy.withServicePlanMapper(plan => `internal.${plan}`);
 })
 
