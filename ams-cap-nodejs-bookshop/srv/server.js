@@ -1,11 +1,11 @@
 const cds = require('@sap/cds');
-const { technicalUserFlows: { TECHNICAL_USER, PRINCIPAL_PROPAGATION }, amsCapPluginRuntime } = require("@sap/ams");
+const {  TECHNICAL_USER_FLOW, PRINCIPAL_PROPAGATION_FLOW, amsCapPluginRuntime } = require("@sap/ams");
 const { mapTechnicalUserApi, mapPrincipalPropagationApi } = require('../ams/apis');
 
 cds.on('bootstrap', () => {
     const cdsAuthProvider = amsCapPluginRuntime.authProvider;
-    cdsAuthProvider.xssecAuthProvider.withApiMapper(mapTechnicalUserApi, TECHNICAL_USER);
-    cdsAuthProvider.xssecAuthProvider.withApiMapper(mapPrincipalPropagationApi, PRINCIPAL_PROPAGATION);
+    cdsAuthProvider.xssecAuthProvider.withApiMapper(mapTechnicalUserApi, TECHNICAL_USER_FLOW);
+    cdsAuthProvider.xssecAuthProvider.withApiMapper(mapPrincipalPropagationApi, PRINCIPAL_PROPAGATION_FLOW);
     // cdsAuthProvider.xssecAuthProvider.withServicePlanMapper(plan => `internal.${plan}`);
 })
 
