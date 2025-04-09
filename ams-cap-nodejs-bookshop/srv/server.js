@@ -10,6 +10,6 @@ cds.on('bootstrap', () => {
 })
 
 cds.on('served', async () => {
-    await amsCapPluginRuntime.getAms().whenReady(5000); // AMS startup check. TODO: couple this with /health endpoint instead
+    await amsCapPluginRuntime.ams.whenReady(5000); // AMS startup check. TODO: couple this with /health endpoint instead
     console.log("AMS has become ready.");
 });
