@@ -1,0 +1,25 @@
+{
+    "name": "ams-express-shopping",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "jest": "NODE_ENV=test AMS_DCN_ROOT=test/dcn npx jest",
+        "start": "node server.js",
+        "pretest": "npx compile-dcl -d auth/dcl -o test/dcn",
+        "test": "npm run jest"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@sap/xsenv": "^5.4.0",
+        "@sap/xssec": "^4.3.0",
+        "express": "^4.21.2"
+    },
+    "devDependencies": {
+        "@sap/ams-dev": "^2.1.1",
+        "jest": "^29.7.0",
+        "supertest": "^7.0.0"
+    }
+}
