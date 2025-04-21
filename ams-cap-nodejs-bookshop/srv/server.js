@@ -6,7 +6,6 @@ cds.on('bootstrap', () => {
     const cdsAuthProvider = amsCapPluginRuntime.authProvider;
     cdsAuthProvider.xssecAuthProvider.withApiMapper(mapTechnicalUserApi, TECHNICAL_USER_FLOW);
     cdsAuthProvider.xssecAuthProvider.withApiMapper(mapPrincipalPropagationApi, PRINCIPAL_PROPAGATION_FLOW);
-    // cdsAuthProvider.xssecAuthProvider.withServicePlanMapper(plan => `internal.${plan}`);
 })
 
 cds.on('served', async () => {
