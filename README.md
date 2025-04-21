@@ -5,7 +5,7 @@
 The Node.js sample applications in this repository demonstrate [policy based authorization](https://help.sap.com/docs/identity-authentication/identity-authentication/configuring-authorization-policies?locale=en-US) with the Authorization Management Service (AMS) in applications that authenticate users via the [SAP Cloud Identity Services](https://help.sap.com/docs/identity-authentication?locale=en-US) (SCI). The focus of the samples is on the authorization via AMS but as the authentication is a necessary requirement, it is demonstrated as well.
 
 - [Node.js CAP sample application](./ams-cap-nodejs-bookshop/)
-- **Node.js express.js sample application**: Coming with `@sap/ams` major release version 3
+- [Node.js Express sample application](./ams-express-shopping/)
 
 ## Description
 AMS is the component of SCI that can be enabled to implement and manage an application's authorization in a flexible policy-based language called Data Control Language (DCL). Besides standard authorization checks, it enables applications to provide instance-based authorization capabilities to customers, e.g. limiting a user's access to a slice of the data based on cross-cutting attributes such as company code or region.
