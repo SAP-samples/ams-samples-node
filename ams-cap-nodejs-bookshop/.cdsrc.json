@@ -31,19 +31,11 @@
                             "local.BestsellerReader"
                         ]
                     },
-                    "amsServer": {
+                    "technicalUser": {
                         "roles": [
                             "system-user"
                         ],
                         "ias_apis": [
-                            "AMS_ValueHelp"
-                        ]
-                    },
-                    "serviceConsumer": {
-                        "roles": [
-                            "system-user"
-                        ],
-                        "servicePlans": [
                             "ReadCatalog"
                         ]
                     },
