@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "jest": "NODE_ENV=test AMS_DCN_ROOT=test/dcn npx jest",
+        "jest": "NODE_ENV=test npx jest",
         "start": "node server.js",
         "pretest": "npx compile-dcl -d auth/dcl -o test/dcn",
         "test": "npm run jest"
