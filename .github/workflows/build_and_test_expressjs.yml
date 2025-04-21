@@ -7,12 +7,12 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - "ams-expressjs-shopping/**"
+      - "ams-express-shopping/**"
       - ".github/workflows/build_and_test_expressjs.yml"
   pull_request:
     branches: [ "**" ]
     paths:
-      - "ams-expressjs-shopping/**"
+      - "ams-express-shopping/**"
       - ".github/workflows/build_and_test_expressjs.yml"
 
 jobs:
@@ -32,13 +32,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: ams-expressjs-shopping
+        cache-dependency-path: ams-express-shopping
     - name: Set up JDK 17 # for DCL -> DCN compilation to work before tests
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
     - run: npm ci
-      working-directory: ams-expressjs-shopping
+      working-directory: ams-express-shopping
     - run: npm test
-      working-directory: ams-expressjs-shopping
+      working-directory: ams-express-shopping
