@@ -30,6 +30,22 @@
                             "local.Zealot",
                             "local.BestsellerReader"
                         ]
+                    },
+                    "technicalUser": {
+                        "roles": [
+                            "system-user"
+                        ],
+                        "ias_apis": [
+                            "ReadCatalog"
+                        ]
+                    },
+                    "principalPropagation": {
+                        "policies": [
+                            "local.JuniorReader"
+                        ],
+                        "ias_apis": [
+                            "ReadCatalog"
+                        ]
                     }
                 }
             },

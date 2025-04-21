@@ -106,7 +106,7 @@ describe('CatalogService', () => {
       expect(data.value?.length).toBe(1)
       expect(data.value).toContainEqual(expect.objectContaining({ title: 'Catweazle' }))
     })
-    
+
     // Book 201 = Wuthering Heights
     it('/Books/201/getStockedValue() should be forbidden', async () => {
       expect.hasAssertions();
@@ -114,14 +114,14 @@ describe('CatalogService', () => {
         expect(error.response.status).toBe(403)
       })
     })
-    
+
     // Book 252 = Eleonora
     it('/Books/252/getStockedValue() should return 7770', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books/252/getStockedValue()`
       expect(status).toBe(200)
       expect(data.value).toBe(7770)
     })
-    
+
     // 15711.35 = stocked value over ALL books because instance-based filters are NOT supported by CAP for functions bound to more than one entity
     it('/Books/getTotalStockedValue() should return 15711.35', async () => {
       expect.hasAssertions();
@@ -188,5 +188,70 @@ describe('CatalogService', () => {
     })
   })
 
+  describe('called by technicalUser (calling ReadCatalog API policy)', () => {
+    beforeAll(() => {
+      axios.defaults.auth = { username: 'technicalUser', password: '' }
+    })
+
+    /**
+     * The ReadCatalog API policy grants access to books with stock < 30
+     */
+    it('/Books should return 2 Books (Eleonora, Catweazle)', async () => {
+      const { status, data } = await GET`/odata/v4/catalog/Books`
+      expect(status).toBe(200)
+      expect(data.value?.length).toBe(3)
+      expect(data.value).toContainEqual(expect.objectContaining({ title: 'Catweazle' }))
+      expect(data.value).toContainEqual(expect.objectContaining({ title: 'Wuthering Heights' }))
+      expect(data.value).toContainEqual(expect.objectContaining({ title: 'Jane Eyre' }))
+    })
+
+    // Book 252 = Eleonora
+    it('/Books/252/getStockedValue() should be forbidden', async () => {
+      expect.hasAssertions();
+      return (GET`/odata/v4/catalog/Books/252/getStockedValue()`).catch(error => {
+        expect(error.response.status).toBe(403)
+      })
+    })
+
+    // Book 271 = Catweazle
+    it('/Books/271/getStockedValue() should return 7770', async () => {
+      const { status, data } = await GET`/odata/v4/catalog/Books/271/getStockedValue()`
+      expect(status).toBe(200)
+      expect(data.value).toBe(3300)
+    })
+  })
+
+  describe('called by principalPropagation (cap.JuniorReader policy limited to ReadCatalog API policy)', () => {
+    beforeAll(() => {
+      axios.defaults.auth = { username: 'principalPropagation', password: '' }
+    })
+
+    /**
+     * The JuniorReader policy adds attribute filters with an OR condition to the query:
+     * - access to Catweazle is granted as its genre is Fantasy
+     * - access to Eleonora is granted as its description hints at a happy ending but filtered out by stock < 30 from ReadCatalog policy
+     */
+    it('/Books should return 2 Books (Eleonora, Catweazle)', async () => {
+      const { status, data } = await GET`/odata/v4/catalog/Books`
+      expect(status).toBe(200)
+      expect(data.value?.length).toBe(1)
+      expect(data.value).toContainEqual(expect.objectContaining({ title: 'Catweazle' }))
+    })
+
+    // Book 252 = Eleonora
+    it('/Books/252/getStockedValue() should be forbidden', async () => {
+      expect.hasAssertions();
+      return (GET`/odata/v4/catalog/Books/252/getStockedValue()`).catch(error => {
+        expect(error.response.status).toBe(403)
+      })
+    })
+
+    // Book 271 = Catweazle
+    it('/Books/271/getStockedValue() should return 7770', async () => {
+      const { status, data } = await GET`/odata/v4/catalog/Books/271/getStockedValue()`
+      expect(status).toBe(200)
+      expect(data.value).toBe(3300)
+    })
+  })
 
 })
