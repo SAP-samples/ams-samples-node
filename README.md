@@ -1,6 +1,5 @@
-<!--- Register repository https://api.reuse.software/register, then add REUSE badge:
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/REPO-NAME)](https://api.reuse.software/info/github.com/SAP-samples/REPO-NAME)
--->
+
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/ams-samples-node)](https://api.reuse.software/info/github.com/SAP-samples/ams-samples-node)
 
 # AMS Sample Applications (Node.js)
 The Node.js sample applications in this repository demonstrate [policy based authorization](https://help.sap.com/docs/identity-authentication/identity-authentication/configuring-authorization-policies?locale=en-US) with the Authorization Management Service (AMS) in applications that authenticate users via the [SAP Cloud Identity Services](https://help.sap.com/docs/identity-authentication?locale=en-US) (SCI). The focus of the samples is on the authorization via AMS but as the authentication is a necessary requirement, it is demonstrated as well.
