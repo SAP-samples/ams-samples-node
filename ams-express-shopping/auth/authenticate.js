@@ -37,12 +37,13 @@ https://www.npmjs.com/package/@sap/xssec#testing
 function buildMockAuthMiddleware() {
     return async function mockAuthentication(req, res, next) {
         const basicAuthUser = req.headers['authorization']?.split(' ')[1];
-        if (!basicAuthUser) {
+        const user = Buffer.from(basicAuthUser, 'base64').toString().split(':')[0];
+        const [username, api] = user.split('|');
+
+        if (!username) {
             return res.sendStatus(401);
         }
 
-        const user = Buffer.from(basicAuthUser, 'base64').toString().split(':')[0];
-        const [username, api] = user.split('|');
         const mockPayload = {
             app_tid: "default",
             scim_id: username,
