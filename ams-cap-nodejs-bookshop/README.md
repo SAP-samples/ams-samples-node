@@ -4,4 +4,4 @@ This branch is a minimal version of the sample from the [main](../../tree/main) 
 
 It shows the project before adding **AMS**.
 
-For comparison, the [cap_minimal](../../tree/cap_minimal) branch shows the minimal project after adding **AMS**.
+For comparison, the [cap_minimal](../../cap_minimal) branch shows the minimal project after adding **AMS**.
