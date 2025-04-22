@@ -1,19 +1,19 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: CAP sample
+name: Express sample
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - "ams-cap-nodejs-bookshop/**"
-      - ".github/workflows/build_and_test_cap.yml"
+      - "ams-express-shopping/**"
+      - ".github/workflows/build_and_test_expressjs.yml"
   pull_request:
     branches: [ "**" ]
     paths:
-      - "ams-cap-nodejs-bookshop/**"
-      - ".github/workflows/build_and_test_cap.yml"
+      - "ams-express-shopping/**"
+      - ".github/workflows/build_and_test_expressjs.yml"
 
 jobs:
   npm:
@@ -32,13 +32,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: ams-cap-nodejs-bookshop
+        cache-dependency-path: ams-express-shopping
     - name: Set up JDK 17 # for DCL -> DCN compilation to work before tests
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
     - run: npm ci
-      working-directory: ams-cap-nodejs-bookshop
+      working-directory: ams-express-shopping
     - run: npm test
-      working-directory: ams-cap-nodejs-bookshop
+      working-directory: ams-express-shopping
