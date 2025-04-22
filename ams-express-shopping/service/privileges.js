@@ -1,3 +1,5 @@
+const { AMS_AUTHORIZATIONS } = require("@sap/ams");
+
 /**
  * Returns the potential privileges of the user to determine which UI elements to show.
  * @param {import("@sap/ams").AuthorizedRequest} req 
