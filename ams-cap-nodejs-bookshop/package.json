@@ -6,14 +6,13 @@
   "private": true,
   "dependencies": {
     "@cap-js/sqlite": "^1.7.4",
-    "@sap/ams": "^3.0.0",
     "@sap/cds": "^8",
     "@sap/xssec": "^4",
     "express": "^4",
     "passport": "^0"
   },
   "devDependencies": {
-    "@sap/ams-dev": "^2.1.2",
+    "@cap-js/cds-test": "^0.3.0",
     "@sap/cds-dk": "^8.7.3",
     "jest": "^29.7.0"
   },
