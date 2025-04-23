@@ -5,7 +5,7 @@ const { ams } = require("../auth/authorize");
  */
 module.exports = async() => {
     try {
-        await ams.isReady(5000);
+        await ams.whenReady(5000);
     } catch(e) {
         console.error(e);
         process.exit(1);
