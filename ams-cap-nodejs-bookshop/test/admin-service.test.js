@@ -20,24 +20,6 @@ describe('AdminService', () => {
       expect(data.value?.length).toBe(4)
     })
   })   
-  
-  // describe('called by bob (cap.admin policy assigned)', () => {
-  //   beforeAll(() => {
-  //     axios.defaults.auth = { username: 'bob', password: '' }
-  //   })
-
-  //   it('/Books should return all Books', async () => {
-  //     const { status, data } = await GET `/admin/Books` 
-  //     expect(status).toBe(200)
-  //     expect(data.value?.length).toBe(5)
-  //   })
-
-  //   it('/Authors should return all Authors', async () => {
-  //     const { status, data } = await GET `/admin/Authors` 
-  //     expect(status).toBe(200)
-  //     expect(data.value?.length).toBe(4)
-  //   })
-  // })  
 
   describe('called by fred (no admin)', () => {
     beforeAll(() => {
