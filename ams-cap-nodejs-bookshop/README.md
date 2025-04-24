@@ -2,6 +2,9 @@
 
 This sample uses the [CAP bookshop sample](https://github.com/SAP-samples/cloud-cap-samples/tree/main/bookshop) to demonstrate authentication via [SAP Cloud Identity Services](https://help.sap.com/docs/identity-authentication?locale=en-US) (SCI) and [policy based authorization](https://help.sap.com/docs/identity-authentication/identity-authentication/configuring-authorization-policies?locale=en-US) via its Authorization Management Service (AMS) component.
 
+The repository contains a guided tour for the [CodeTour](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour#:~:text=CodeTour%20is%20a%20Visual%20Studio,a%20code%20review%2FPR%20change.) VSCode extension. The tour guides you through all files in the project related to AMS step-by-step with explanations.
+Additionally, for a brief overview of the changes required to add AMS to a minimal version of the sample, you can also compare the file changes in this [PR](https://github.com/SAP-samples/ams-samples-node/pull/9).
+
 ### AMS
 AMS is the component of SCI for managing authorization policies that control access rights of the application. It allows defining fine-grained access rules at runtime without re-deploying or restarting the application.
 
