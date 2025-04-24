@@ -4,9 +4,31 @@
             "[development]": {
                 "kind": "mocked",
                 "users": {
+                    "bob": {
+                        "policies": [
+                            "cap.admin",
+                            "cap.Reader"
+                        ]
+                    },
                     "carol": {
                         "roles": [
                             "Reader"
+                        ]
+                    },
+                    "dave": {
+                        "policies": [
+                            "local.JuniorReader"
+                        ]
+                    },
+                    "erin": {
+                        "policies": [
+                            "local.BestsellerReader"
+                        ]
+                    },
+                    "fred": {
+                        "policies": [
+                            "local.JuniorReader",
+                            "local.BestsellerReader"                            
                         ]
                     }
                 }
