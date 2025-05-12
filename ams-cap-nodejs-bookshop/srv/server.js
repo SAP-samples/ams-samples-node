@@ -1,6 +1,6 @@
 const cds = require('@sap/cds');
 const {  TECHNICAL_USER_FLOW, PRINCIPAL_PROPAGATION_FLOW, amsCapPluginRuntime } = require("@sap/ams");
-const { mapTechnicalUserApi, mapPrincipalPropagationApi } = require('../ams/apis');
+const { mapTechnicalUserApi, mapPrincipalPropagationApi } = require('./apis');
 
 cds.on('bootstrap', () => {
     const cdsAuthProvider = amsCapPluginRuntime.authProvider;
