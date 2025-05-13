@@ -9,8 +9,7 @@
     "@sap/ams": "^3.0.0",
     "@sap/cds": "^8",
     "@sap/xssec": "^4",
-    "express": "^4",
-    "passport": "^0"
+    "express": "^4"
   },
   "devDependencies": {
     "@sap/ams-dev": "^2.1.2",
