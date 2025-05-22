@@ -231,7 +231,7 @@ describe('CatalogService', () => {
      * - access to Catweazle is granted as its genre is Fantasy
      * - access to Eleonora is granted as its description hints at a happy ending but filtered out by stock < 30 from ReadCatalog policy
      */
-    it('/Books should return 2 Books (Eleonora, Catweazle)', async () => {
+    it('/Books should return 1 Book (Catweazle)', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books`
       expect(status).toBe(200)
       expect(data.value?.length).toBe(1)
