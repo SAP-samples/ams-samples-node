@@ -1,0 +1,3 @@
+[submodule "ams-cap-nodejs-bookshop/ams"]
+	path = ams-cap-nodejs-bookshop/ams
+	url = git@github.wdf.sap.corp:I577963/ams-cap-sample-policies.git
