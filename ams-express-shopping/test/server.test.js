@@ -1,10 +1,6 @@
 const request = require('supertest');
-const { server, whenServerReady } = require('../server');
+const server = require('../server');
 const db = require('../db/db');
-
-beforeAll(async () => {
-    await whenServerReady;
-});
 
 beforeEach(() => {
     db.reset();

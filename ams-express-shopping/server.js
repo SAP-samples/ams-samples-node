@@ -18,16 +18,10 @@ const healthCheck = (req, res) => {
     }
 };
 
-let resolveServerReady; // only required to know before unit tests when the server is ready
-const whenServerReady = new Promise((resolve) => {
-    resolveServerReady = resolve;
-});
-
 const amsStartupCheck = async () => {
     try {
         await ams.whenReady(AMS_STARTUP_TIMEOUT);
         isReady = true;
-        resolveServerReady();
         console.log('AMS has become ready.');
     } catch (e) {
         console.error('AMS did not become become ready in time:', e);
@@ -62,4 +56,4 @@ const server = app.listen(PORT, () => {
 
 amsStartupCheck();
 
-module.exports = { server, whenServerReady };
+module.exports = server;
