@@ -1,6 +1,7 @@
 const { AuthorizationManagementService, IdentityServiceAuthProvider, TECHNICAL_USER_FLOW, PRINCIPAL_PROPAGATION_FLOW } = require("@sap/ams");
 const { mapTechnicalUserApi, mapPrincipalPropagationApi } = require("./apis");
 
+/** @type {AuthorizationManagementService} */
 let ams;
 if (process.env.NODE_ENV === 'test') {
     ams = AuthorizationManagementService.fromLocalDcn("./test/dcn", {
@@ -18,25 +19,15 @@ const authProvider = new IdentityServiceAuthProvider(ams)
 const amsMw = authProvider.getMiddleware();
 const authorize = amsMw.authorize();
 
-if (process.env.DEBUG?.split(",").includes("ams")) {
-    ams.on("authorizationCheck", event => {
-        if (event.type === "checkPrivilege") {
-            if (event.decision.isGranted()) {
-                console.log(`Privilege '${event.action} ${event.resource}' for ${event.context.token.scimId} was granted based on input`, event.input);
-            } else if(event.decision.isDenied()) {
-                console.log(`Privilege '${event.action} ${event.resource}' for ${event.context.token.scimId} was denied based on input`, event.input);
-            } else {
-                console.log(`Privilege '${event.action} ${event.resource}' for ${event.context.token.scimId} was conditionally granted based on input`, event.input);
-            }
-        }
-    });
-
-    ams.on("error", event => {
-        if (event.type === "bundleRefreshError") {
+ams.on("error", event => {
+    if (event.type === "bundleRefreshError") {
+        if(ams.isReady()) {
             console.warn("AMS bundle refresh error:", event.error);
+        } else {
+            console.error("AMS initial bundle fetch error:", event.error);
         }
-    });
-}
+    }
+});
 
 module.exports = {
     authorize,
