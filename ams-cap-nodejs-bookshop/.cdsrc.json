@@ -53,8 +53,8 @@
                 "kind": "ias",
                 "config": { 
                     "validation": {
-                        "x5t": { "enabled": false },
-                        "proofToken": { "enabled": false }
+                        "x5t": { "enabled": true },
+                        "proofToken": { "enabled": true }
                     }
                 },
                 "ams": {
