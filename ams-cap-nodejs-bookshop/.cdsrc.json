@@ -51,6 +51,12 @@
             },
             "[production]": {
                 "kind": "ias",
+                "config": { 
+                    "validation": {
+                        "x5t": { "enabled": false },
+                        "proofToken": { "enabled": false }
+                    }
+                },
                 "ams": {
                     "cache": {
                         "TTL": 15000
