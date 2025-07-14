@@ -20,8 +20,8 @@ class CatalogService extends cds.ApplicationService { init() {
     return book
   })
 
-  this.on('getStockedValue', 'Books', async ({params:[id]}) => {
-    const stockedValue = (await SELECT `stock * price as stockedValue` .from (Books) .where ({ID:id}))[0].stockedValue
+  this.on('getStockedValue', 'Books', async ({ params: [{ ID }] }) => {
+    const stockedValue = (await SELECT `stock * price as stockedValue` .from (Books) .where ({ID}))[0].stockedValue
     return stockedValue;
   })
 

@@ -5,19 +5,20 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@cap-js/sqlite": "^1.7.4",
+    "@cap-js/sqlite": "^2.0.1",
     "@sap/ams": "^3.0.0",
-    "@sap/cds": "^8",
+    "@sap/cds": "^9.0.3",
     "@sap/xssec": "^4",
     "express": "^4"
   },
   "devDependencies": {
+    "@cap-js/cds-test": "^0.3.0",
     "@sap/ams-dev": "^2.1.2",
-    "@sap/cds-dk": "^8.7.3",
-    "jest": "^29.7.0"
+    "@sap/cds-dk": "^9.0.5",
+    "jest": "^30.0.0"
   },
   "scripts": {
-    "jest": "DEBUG=ams npx jest",
+    "jest": "npx jest",
     "test": "npm run jest",
     "start": "cds-serve"
   },
