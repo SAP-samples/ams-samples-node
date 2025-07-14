@@ -81,33 +81,19 @@ To deploy with *sqlite*, you must copy the [db.sqlite](db.sqlite) file to `gen/s
 Please note that `cds add mta` creates a `mta.yaml` that contains a `before-all` command that runs `cds build --production`. This deletes and re-creates the `gen` folder after you manually copied the file. In that case, you should add another command behind it such as `cp db.sqlite gen/srv/db.sqlite` instead of manually copying.
 
 ### (Optional) Configure Value Help in mta.yaml
-To add value help to your application, replace the section for ams-cap-nodejs-bookshop-auth with this: 
+To add value help to your application, include provided-apis, value-help-url and value-help-api-name in ams-cap-nodejs-bookshop-auth: 
 ```yaml
-resources:
-  - name: ams-cap-nodejs-bookshop-auth
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: identity
-      service-name: ams-cap-nodejs-bookshop-auth
-      service-plan: application
-      config:
-        display-name: ams-cap-nodejs-bookshop-marie
-        provided-apis:
-          - name: AMS_ValueHelp
-            description: Value Help Callback from AMS
-            type: public
-        authorization:
-          enabled: true
-          value-help-url: ~{srv-api/srv-cert-url}/odata/v4/ams-value-help/
-          value-help-api-name: AMS_ValueHelp
-        oauth2-configuration:
-          redirect-uris:
-            - ~{app-api/app-protocol}://~{app-api/app-uri}/login/callback
-          post-logout-redirect-uris:
-            - ~{app-api/app-protocol}://~{app-api/app-uri}/*/logout.html
-    requires:
-      - name: srv-api
-      - name: app-api
+    provided-apis:
+      - name: AMS_ValueHelp
+        description: Value Help Callback from AMS
+        type: public
+    authorization:
+      enabled: true
+      value-help-url: ~{srv-api/srv-cert-url}/odata/v4/ams-value-help/
+      value-help-api-name: AMS_ValueHelp
+requires:
+  - name: srv-api
+  - name: app-api
 ```
 
 ### Deployment
