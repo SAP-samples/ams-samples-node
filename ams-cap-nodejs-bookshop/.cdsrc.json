@@ -46,6 +46,14 @@
                         "ias_apis": [
                             "ReadCatalog"
                         ]
+                    },
+                    "amsValueHelp": {
+                        "policies": [
+                            "cap.admin"
+                        ],
+                        "ias_apis": [
+                            "AMS_ValueHelp"
+                        ]
                     }
                 }
             },
