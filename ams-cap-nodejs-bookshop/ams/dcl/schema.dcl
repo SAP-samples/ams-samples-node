@@ -5,6 +5,11 @@
 
 SCHEMA {
 	description: String,
+	@valueHelp: { 
+		path: 'Genres',
+		valueField: 'name',
+		labelField: 'name'
+	}
 	genre: String,
 	just: {
 		for: {

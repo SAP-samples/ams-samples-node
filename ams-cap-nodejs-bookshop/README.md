@@ -80,6 +80,22 @@ To deploy with *sqlite*, you must copy the [db.sqlite](db.sqlite) file to `gen/s
 
 Please note that `cds add mta` creates a `mta.yaml` that contains a `before-all` command that runs `cds build --production`. This deletes and re-creates the `gen` folder after you manually copied the file. In that case, you should add another command behind it such as `cp db.sqlite gen/srv/db.sqlite` instead of manually copying.
 
+### (Optional) Configure Value Help in mta.yaml
+To add value help to your application, include provided-apis, value-help-url and value-help-api-name in ams-cap-nodejs-bookshop-auth: 
+```yaml
+    provided-apis:
+      - name: AMS_ValueHelp
+        description: Value Help Callback from AMS
+        type: public
+    authorization:
+      enabled: true
+      value-help-url: ~{srv-api/srv-cert-url}/odata/v4/ams-value-help/
+      value-help-api-name: AMS_ValueHelp
+requires:
+  - name: srv-api
+  - name: app-api
+```
+
 ### Deployment
 
 :warning: Please make sure to use `@sap/cds-dk` version `>= 8.7.3` to get correct deployment configurations for *ams*/*ias*. Remember to update your global npm installation of `@sap/cds-dk` if you have one as it has priority over the version specified in *node_modules*. Use `cds version -i` to check.

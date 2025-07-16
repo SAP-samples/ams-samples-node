@@ -46,11 +46,25 @@
                         "ias_apis": [
                             "ReadCatalog"
                         ]
+                    },
+                    "amsValueHelp": {
+                        "policies": [
+                            "cap.admin"
+                        ],
+                        "ias_apis": [
+                            "AMS_ValueHelp"
+                        ]
                     }
                 }
             },
             "[production]": {
                 "kind": "ias",
+                "config": { 
+                    "validation": {
+                        "x5t": { "enabled": true },
+                        "proofToken": { "enabled": true }
+                    }
+                },
                 "ams": {
                     "cache": {
                         "TTL": 15000
