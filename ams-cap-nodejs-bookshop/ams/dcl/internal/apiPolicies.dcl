@@ -1,5 +1,5 @@
 INTERNAL Policy AMS_ValueHelp {
-    USE cap.Reader;
+    USE cap.admin;
 }
 
 INTERNAL Policy ReadCatalog {
