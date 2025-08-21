@@ -62,8 +62,8 @@ const createOrder = (req, res) => {
 
     // --- entity-specific privilege check in endpoint ---
     const input = {
-        "$app.product.category": product.category,
-        "$app.order.total": totalAmount
+        "product.category": product.category,
+        "order.total": totalAmount
     };
 
     if (!req[AMS_AUTHORIZATIONS].checkPrivilege('create', 'orders', input).isGranted()) {
