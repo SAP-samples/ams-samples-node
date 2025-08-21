@@ -6,16 +6,16 @@
   "private": true,
   "dependencies": {
     "@cap-js/sqlite": "^2.0.1",
-    "@sap/ams": "^3.0.0",
-    "@sap/cds": "^9.0.3",
+    "@sap/ams": "^3.3.0",
+    "@sap/cds": "^9.2.1",
     "@sap/xssec": "^4",
     "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/cds-test": "^0.3.0",
-    "@sap/ams-dev": "^2.1.2",
-    "@sap/cds-dk": "^9.0.5",
-    "jest": "^30.0.0"
+    "@cap-js/cds-test": "^0.4.0",
+    "@sap/ams-dev": "^2.1.4",
+    "@sap/cds-dk": "^9.2.0",
+    "jest": "^30.0.5"
   },
   "scripts": {
     "jest": "npx jest",
