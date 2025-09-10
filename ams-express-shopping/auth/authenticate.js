@@ -1,5 +1,4 @@
-const { SECURITY_CONTEXT } = require('@sap/xssec');
-const { createSecurityContext, IdentityService, IdentityServiceToken, IdentityServiceSecurityContext, errors: { ValidationError } } = require('@sap/xssec');
+const { createSecurityContext, IdentityService, IdentityServiceToken, IdentityServiceSecurityContext, errors: { ValidationError }, SECURITY_CONTEXT } = require('@sap/xssec');
 
 // --- Sets up AUTHENTICATION as pre-condition for AUTHORIZATION ---
 
