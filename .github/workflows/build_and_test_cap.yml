@@ -33,10 +33,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: ams-cap-nodejs-bookshop
-    - name: Set up JDK 17 # for DCL -> DCN compilation to work before tests
+    - name: Set up JDK 21 # for DCL -> DCN compilation to work before tests
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
     - run: npm ci
       working-directory: ams-cap-nodejs-bookshop
