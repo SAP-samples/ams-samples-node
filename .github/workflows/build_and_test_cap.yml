@@ -18,8 +18,6 @@ on:
 jobs:
   npm:
     runs-on: [ ubuntu-latest ]
-    env:
-      JAVA_HOME: /usr/lib/jvm/java-17-openjdk
     strategy:
       matrix:
         node-version: [20.x, 22.x]
