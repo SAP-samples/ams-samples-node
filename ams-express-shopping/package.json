@@ -19,9 +19,9 @@
         "express": "^5.1.0"
     },
     "devDependencies": {
-        "@sap/ams-dev": "^2.1.2",
+        "@sap/ams-dev": "^2.2.0",
         "@types/express": "^5.0.1",
-        "jest": "^30.0.0",
+        "jest": "^30.1.2",
         "supertest": "^7.0.0"
     }
 }
