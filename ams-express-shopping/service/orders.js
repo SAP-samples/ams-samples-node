@@ -53,6 +53,11 @@ const createOrder = (req, res) => {
     */
 
     const { productId, quantity } = req.body;
+    if (!Number.isInteger(productId) || productId < 0 ||
+        !Number.isInteger(quantity) || quantity <= 0) {
+        return res.status(400).json({ message: 'Invalid productId or quantity' });
+    }
+
     const product = db.products.find(p => p.id === productId);
     if (!product) {
         return res.status(404).json({ message: 'Product not found' });
