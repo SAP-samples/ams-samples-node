@@ -85,26 +85,17 @@ describe('CatalogService', () => {
     })
 
     /**
-     * The JuniorReader policy adds attribute filters with an OR condition to the query:
-     * - access to Eleonora is granted as its description hints at a happy ending
+     * The JuniorReader policy adds attribute filters for genre to the query:
      * - access to Catweazle is granted as its genre is Fantasy
+     * - access to The Raven, Eleonora is granted as their genre is Mystery
      */
-    it('/Books should return 2 Books (Eleonora, Catweazle)', async () => {
+    it('/Books should return 3 Books (Catweazle, The Raven, Eleonora)', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books`
       expect(status).toBe(200)
-      expect(data.value?.length).toBe(2)
+      expect(data.value?.length).toBe(3)
+      expect(data.value).toContainEqual(expect.objectContaining({ title: 'Catweazle' }))
+      expect(data.value).toContainEqual(expect.objectContaining({ title: 'The Raven' }))
       expect(data.value).toContainEqual(expect.objectContaining({ title: 'Eleonora' }))
-      expect(data.value).toContainEqual(expect.objectContaining({ title: 'Catweazle' }))
-    })
-
-    /**
-     * On /ListOfBooks, the AMS description attribute is not mapped to a cds element, so access to Eleonora is forbidden
-     */
-    it('/ListOfBooks should return 1 Book (Catweazle)', async () => {
-      const { status, data } = await GET`/odata/v4/catalog/ListOfBooks`
-      expect(status).toBe(200)
-      expect(data.value?.length).toBe(1)
-      expect(data.value).toContainEqual(expect.objectContaining({ title: 'Catweazle' }))
     })
 
     // Book 201 = Wuthering Heights
@@ -115,11 +106,11 @@ describe('CatalogService', () => {
       })
     })
 
-    // Book 252 = Eleonora
-    it('/Books/252/getStockedValue() should return 7770', async () => {
-      const { status, data } = await GET`/odata/v4/catalog/Books/252/getStockedValue()`
+    // Book 271 = Catweazle
+    it('/Books/271/getStockedValue() should return 3300', async () => {
+      const { status, data } = await GET`/odata/v4/catalog/Books/271/getStockedValue()`
       expect(status).toBe(200)
-      expect(data.value).toBe(7770)
+      expect(data.value).toBe(3300)
     })
 
     // 15711.35 = stocked value over ALL books because instance-based filters are NOT supported by CAP for functions bound to more than one entity
@@ -196,7 +187,7 @@ describe('CatalogService', () => {
     /**
      * The ReadCatalog API policy grants access to books with stock < 30
      */
-    it('/Books should return 2 Books (Eleonora, Catweazle)', async () => {
+    it('/Books should return 3 Books with stock < 30 (Catweazle, Wuthering Heights, Jane Eyre)', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books`
       expect(status).toBe(200)
       expect(data.value?.length).toBe(3)
@@ -227,9 +218,9 @@ describe('CatalogService', () => {
     })
 
     /**
-     * The JuniorReader policy adds attribute filters with an OR condition to the query:
+     * The JuniorReader policy adds attribute filters for genre to the query:
      * - access to Catweazle is granted as its genre is Fantasy
-     * - access to Eleonora is granted as its description hints at a happy ending but filtered out by stock < 30 from ReadCatalog policy
+     * - access to The Raven and Eleonora is granted as their genre is Mystery but filtered out by stock < 30 from ReadCatalog policy
      */
     it('/Books should return 1 Book (Catweazle)', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books`

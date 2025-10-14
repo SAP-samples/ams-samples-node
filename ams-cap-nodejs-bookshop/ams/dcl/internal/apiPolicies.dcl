@@ -3,5 +3,8 @@ INTERNAL Policy AMS_ValueHelp {
 }
 
 INTERNAL Policy ReadCatalog {
-    USE cap.Reader RESTRICT stock < 30, description IS NOT RESTRICTED, genre IS NOT RESTRICTED;
+    USE cap.Reader RESTRICT 
+        genre           IS NOT RESTRICTED,
+        description     IS NOT RESTRICTED,
+        stock           < 30;
 }
