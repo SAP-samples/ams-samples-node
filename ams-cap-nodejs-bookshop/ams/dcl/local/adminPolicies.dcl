@@ -1,13 +1,18 @@
 POLICY JuniorReader {
-    USE cap.Reader RESTRICT description LIKE '%happy%ending%', genre IN ('Fantasy', 'Fairy Tale'),
-                            stock IS NOT RESTRICTED;
+    USE cap.Reader RESTRICT 
+        genre           IN ('Fantasy', 'Fairy Tale', 'Mystery'),
+        description     IS NOT RESTRICTED,
+        stock           IS NOT RESTRICTED;
 }
 
 POLICY BestsellerReader {
-    USE cap.Reader RESTRICT stock < 20,
-                            description IS NOT RESTRICTED, genre IS NOT RESTRICTED;
+    USE cap.Reader RESTRICT 
+        genre           IS NOT RESTRICTED,
+        description     IS NOT RESTRICTED,
+        stock           < 20;
 }
 
 POLICY Zealot {
-    USE cap.Inquisitor RESTRICT description LIKE '%religious%references%';
+    USE cap.Inquisitor RESTRICT 
+        description     LIKE '%religious%references%';
 }
