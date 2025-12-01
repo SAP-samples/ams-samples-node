@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@cap-js/sqlite": "^2.0.4",
+    "@cap-js/sqlite": "^2.1.0",
     "@sap/ams": "^3.5.0",
     "@sap/cds": "^9.4.4",
     "@sap/xssec": "^4",
