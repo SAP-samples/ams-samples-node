@@ -9,7 +9,7 @@
     "@sap/ams": "^3.5.0",
     "@sap/cds": "^9.4.4",
     "@sap/xssec": "^4",
-    "express": "^4"
+    "express": "^5"
   },
   "devDependencies": {
     "@cap-js/cds-test": "^0.4.1",
