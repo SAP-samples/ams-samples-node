@@ -16,11 +16,11 @@
         "@sap/ams": "^3.5.0",
         "@sap/xsenv": "^6.0.0",
         "@sap/xssec": "^4.11.2",
-        "express": "^5.2.0"
+        "express": "^5.2.1"
     },
     "devDependencies": {
         "@sap/ams-dev": "^2.2.0",
-        "@types/express": "^5.0.5",
+        "@types/express": "^5.0.6",
         "jest": "^30.2.0",
         "supertest": "^7.0.0"
     }
