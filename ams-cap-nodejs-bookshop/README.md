@@ -113,7 +113,7 @@ To understand what is going on under the hood in the deployed application, we su
 You must fetch an IAS token and use it to call the different services of the application.
 
 #### IAS Token Fetch
-First, find your IAS service credentials in the environment of your application _or:_ create a **certificate-based** service key for your IAS service instance.
+First, find your IAS service credentials in the environment of your application _or:_ create a [certificate-based](https://help.sap.com/docs/cloud-identity-services/cloud-identity-services/reference-information-for-identity-service-of-sap-btp?locale=en-US&q=x509_generated#binding-properties) service key for your IAS service instance.
 
 Use the service credentials and a test user's credentials to fetch a user token with an HTTP Client such a `curl` or *Postman* based on the [official documentation](https://help.sap.com/docs/identity-authentication/identity-authentication/configure-client-to-call-identity-authentication-password-token).\
 As an alternative, `xssec 4` provides an easy to use [Node.js API](https://www.npmjs.com/package/@sap/xssec#fetching-tokens) to fetch IAS tokens.
