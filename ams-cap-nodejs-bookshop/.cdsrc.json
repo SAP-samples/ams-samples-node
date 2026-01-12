@@ -58,18 +58,7 @@
                 }
             },
             "[production]": {
-                "kind": "ias",
-                "config": { 
-                    "validation": {
-                        "x5t": { "enabled": true },
-                        "proofToken": { "enabled": true }
-                    }
-                },
-                "ams": {
-                    "cache": {
-                        "TTL": 15000
-                    }
-                }
+                "kind": "ias"
             }
         },
         "db": {
