@@ -75,6 +75,24 @@ This allows you to test the application locally but bind it against a SAP Identi
 Refer to  [@sap/ams Hybrid Testing](https://www.npmjs.com/package/@sap/ams#hybrid-testing) for details.
 
 ## Testing on SAP BTP
+### Deployment
+
+:warning: Please make sure to use the most recent `@sap/cds-dk` version to get correct deployment configurations for *ams*/*ias*. Remember to update your global npm installation of `@sap/cds-dk` if you have one as it has priority over the version specified in *node_modules*. Use `cds version -i` to check.
+
+Before deploying the application, you may want to add additional facets via `cds add <facet> --for production` that you would like to use in your deployment, e.g. an `approuter` to login via the browser. However, such facets are out-of-scope of this sample and not necessary to test the *ams*-related features.
+
+Just follow the standard [Deployment](https://cap.cloud.sap/docs/guides/deployment/) guides on Capire to deploy this sample. It should work with `mta`, `helm` and even `cf-manifest` deployments.
+
+#### CF Deployment via MTA
+For Cloud Foundry deployments, the recommended way by CAP is to use MTA deployment descriptors.
+
+You can always generate a reference `mta.yaml` via `cds add mta` for this sample.
+This is also helpful as a reference for existing applications who want to manually adjust their `mta.yaml` to add AMS.
+
+In issue [#29](https://github.com/SAP-samples/ams-samples-node/issues/29) of this repository, we posted a `mta.yaml` that was created this way. It contains the additional adjustments mentioned below.\
+:warning: We try our best to keep it up-to-date but there is no guarantee we can react to all changes in CAP deployment configurations in the future.
+We recommend to generate one with the latest `@sap/cds-dk` version to be sure.
+
 ### Prerequisite
 To deploy with *sqlite*, you must copy the [db.sqlite](db.sqlite) file to `gen/srv/db.sqlite` after `cds build --production`.
 
@@ -95,14 +113,6 @@ requires:
   - name: srv-api
   - name: app-api
 ```
-
-### Deployment
-
-:warning: Please make sure to use `@sap/cds-dk` version `>= 8.7.3` to get correct deployment configurations for *ams*/*ias*. Remember to update your global npm installation of `@sap/cds-dk` if you have one as it has priority over the version specified in *node_modules*. Use `cds version -i` to check.
-
-Before deploying the application, you may want to add additional facets via `cds add <facet> --for production` that you would like to use in your deployment, e.g. an `approuter` to login via the browser. However, such facets are out-of-scope of this sample and not necessary to test the *ams*-related features.
-
-Just follow the standard [Deployment](https://cap.cloud.sap/docs/guides/deployment/) guides on Capire to deploy this sample. It should work with `mta`, `helm` and even `cf-manifest` deployments.
 
 ### Turn on AMS Logging
 To understand what is going on under the hood in the deployed application, we suggest you set environment variable `DEBUG` to `ams` in your deployed application to see debug output from AMS*. Make sure to restart the application for this to take effect.
