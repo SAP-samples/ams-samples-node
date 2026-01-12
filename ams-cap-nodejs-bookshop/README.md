@@ -89,7 +89,7 @@ For Cloud Foundry deployments, the recommended way by CAP is to use MTA deployme
 You can always generate a reference `mta.yaml` via `cds add mta` for this sample.
 This is also helpful as a reference for existing applications who want to manually adjust their `mta.yaml` to add AMS.
 
-In issue [#29](/issues/29) of this repository, we posted a `mta.yaml` that was created this way. It contains the additional adjustments mentioned below.\
+In issue [#29](https://github.com/SAP-samples/ams-samples-node/issues/29) of this repository, we posted a `mta.yaml` that was created this way. It contains the additional adjustments mentioned below.\
 :warning: We try our best to keep it up-to-date but there is no guarantee we can react to all changes in CAP deployment configurations in the future.
 We recommend to generate one with the latest `@sap/cds-dk` version to be sure.
 
