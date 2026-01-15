@@ -3,29 +3,9 @@ const cds = require('@sap/cds')
 describe('CatalogService', () => {
   const { GET, axios } = cds.test()
 
-  describe('called by alice (no Reader)', () => {
+  describe('called by reader (cap.Reader policy assigned)', () => {
     beforeAll(() => {
-      axios.defaults.auth = { username: 'alice', password: '' }
-    })
-
-    it('/Books should return status 403', async () => {
-      expect.assertions(1);
-      return (GET`/odata/v4/catalog/Books`).catch(error => {
-        expect(error.response.status).toBe(403)
-      })
-    })
-
-    it('/ListOfBooks should return status 403', async () => {
-      expect.assertions(1);
-      return (GET`/odata/v4/catalog/ListOfBooks`).catch(error => {
-        expect(error.response.status).toBe(403)
-      })
-    })
-  })
-
-  describe('called by bob (cap.Reader policy assigned)', () => {
-    beforeAll(() => {
-      axios.defaults.auth = { username: 'bob', password: '' }
+      axios.defaults.auth = { username: 'reader', password: '' }
     })
 
     it('/Books should return all Books', async () => {
@@ -53,41 +33,16 @@ describe('CatalogService', () => {
     })
   })
 
-  describe('called by carol (cap.Zealot policy assigned)', () => {
+  describe('called by juniorReader (local.JuniorReader policy assigned)', () => {
     beforeAll(() => {
-      axios.defaults.auth = { username: 'carol', password: '' }
+      axios.defaults.auth = { username: 'juniorReader', password: '' }
     })
 
     /**
-     * - access to The Raven is granted as its description contains religious references
-     */
-    it('/Books should return 1 Book (The Raven)', async () => {
-      const { status, data } = await GET`/odata/v4/catalog/Books`
-      expect(status).toBe(200)
-      expect(data.value?.length).toBe(1)
-      expect(data.value[0].title).toEqual('The Raven')
-    })
-
-    /**
-     * On /ListOfBooks, the AMS description attribute is not mapped to a cds element, so access to The Raven is forbidden
-     */
-    it('/ListOfBooks should return 403 because the AMS description attribute is not mapped to a cds element', async () => {
-      expect.hasAssertions();
-      return (GET`/odata/v4/catalog/ListOfBooks`).catch(error => {
-        expect(error.response.status).toBe(403)
-      });
-    })
-  })
-
-  describe('called by dave (cap.JuniorReader policy assigned)', () => {
-    beforeAll(() => {
-      axios.defaults.auth = { username: 'dave', password: '' }
-    })
-
-    /**
-     * The JuniorReader policy adds attribute filters for genre to the query:
+     * The JuniorReader policy restricts to Fairy Tale, Fantasy, and Mystery genres:
      * - access to Catweazle is granted as its genre is Fantasy
-     * - access to The Raven, Eleonora is granted as their genre is Mystery
+     * - access to The Raven and Eleonora is granted as their genre is Mystery
+     * - Fairy Tale books would also be included but there are none in the data
      */
     it('/Books should return 3 Books (Catweazle, The Raven, Eleonora)', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books`
@@ -98,7 +53,7 @@ describe('CatalogService', () => {
       expect(data.value).toContainEqual(expect.objectContaining({ title: 'Eleonora' }))
     })
 
-    // Book 201 = Wuthering Heights
+    // Book 201 = Wuthering Heights (Drama genre - not allowed)
     it('/Books/201/getStockedValue() should be forbidden', async () => {
       expect.hasAssertions();
       return (GET`/odata/v4/catalog/Books/201/getStockedValue()`).catch(error => {
@@ -106,7 +61,7 @@ describe('CatalogService', () => {
       })
     })
 
-    // Book 271 = Catweazle
+    // Book 271 = Catweazle (Fantasy genre - allowed)
     it('/Books/271/getStockedValue() should return 3300', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books/271/getStockedValue()`
       expect(status).toBe(200)
@@ -122,72 +77,16 @@ describe('CatalogService', () => {
     })
   })
 
-  describe('called by erin (BestsellerReader)', () => {
-    beforeAll(() => {
-      axios.defaults.auth = { username: 'erin', password: '' }
-    })
-
-    it('/Books should return 2 Books (Wuthering Heights, Jane Eyre)', async () => {
-      const { status, data } = await GET`/odata/v4/catalog/Books`
-      expect(status).toBe(200)
-      expect(data.value?.length).toBe(2)
-      const bookTitles = data.value.map(book => book.title)
-      expect(bookTitles).toContain('Wuthering Heights')
-      expect(bookTitles).toContain('Jane Eyre')
-    })
-
-    it('/ListOfBooks should return 2 Books (Wuthering Heights, Jane Eyre)', async () => {
-      const { status, data } = await GET`/odata/v4/catalog/ListOfBooks`
-      expect(status).toBe(200)
-      expect(data.value?.length).toBe(2)
-      const bookTitles = data.value.map(book => book.title)
-      expect(bookTitles).toContain('Wuthering Heights')
-      expect(bookTitles).toContain('Jane Eyre')
-    })
-  })
-
-  describe('called by fred (Zealot, BestsellerReader)', () => {
-    beforeAll(() => {
-      axios.defaults.auth = { username: 'fred', password: '' }
-    })
-
-    /**
-     * Combination of two policies with different attribute filters should yield union of both result sets:
-     * - via Zealot policy access to The Raven is granted as its description contains religious references
-     * - via BestsellerReader policy access to Wuthering Heights and Jane Eyre is granted as they are low on stock
-     */
-    it('/Books should return 3 Books (Wuthering Heights, Jane Eyre, The Raven)', async () => {
-      const { status, data } = await GET`/odata/v4/catalog/Books`
-      expect(status).toBe(200)
-      expect(data.value?.length).toBe(3)
-      const bookTitles = data.value.map(book => book.title)
-      expect(bookTitles).toContain('Wuthering Heights')
-      expect(bookTitles).toContain('Jane Eyre')
-      expect(bookTitles).toContain('The Raven')
-    })
-
-    /**
-     * On /ListOfBooks, the AMS description attribute is not mapped to a cds element, so access via the Zealot policy is forbidden
-     */
-    it('/ListOfBooks should return 2 Books (Wuthering Heights, Jane Eyre)', async () => {
-      const { status, data } = await GET`/odata/v4/catalog/ListOfBooks`
-      expect(status).toBe(200)
-      expect(data.value?.length).toBe(2)
-      const bookTitles = data.value.map(book => book.title)
-      expect(bookTitles).toContain('Wuthering Heights')
-      expect(bookTitles).toContain('Jane Eyre')
-    })
-  })
-
   describe('called by technicalUser (calling ReadCatalog API policy)', () => {
     beforeAll(() => {
       axios.defaults.auth = { username: 'technicalUser', password: '' }
     })
 
     /**
-     * The ReadCatalog API policy grants access to books with stock < 30
+     * The ReadCatalog API policy restricts to genres NOT IN (Mystery, Romance, Thriller, Dystopia)
+     * The remaining list includes Drama (Wuthering Heights, Jane Eyre) and Fantasy (Catweazle)
      */
-    it('/Books should return 3 Books with stock < 30 (Catweazle, Wuthering Heights, Jane Eyre)', async () => {
+    it('/Books should return 3 Books (Catweazle, Wuthering Heights, Jane Eyre)', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books`
       expect(status).toBe(200)
       expect(data.value?.length).toBe(3)
@@ -196,7 +95,7 @@ describe('CatalogService', () => {
       expect(data.value).toContainEqual(expect.objectContaining({ title: 'Jane Eyre' }))
     })
 
-    // Book 252 = Eleonora
+    // Book 252 = Eleonora (Mystery genre - forbidden by ReadCatalog policy)
     it('/Books/252/getStockedValue() should be forbidden', async () => {
       expect.hasAssertions();
       return (GET`/odata/v4/catalog/Books/252/getStockedValue()`).catch(error => {
@@ -204,23 +103,23 @@ describe('CatalogService', () => {
       })
     })
 
-    // Book 271 = Catweazle
-    it('/Books/271/getStockedValue() should return 7770', async () => {
+    // Book 271 = Catweazle (Fantasy genre - allowed by ReadCatalog policy)
+    it('/Books/271/getStockedValue() should return 3300', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books/271/getStockedValue()`
       expect(status).toBe(200)
       expect(data.value).toBe(3300)
     })
   })
 
-  describe('called by principalPropagation (cap.JuniorReader policy limited to ReadCatalog API policy)', () => {
+  describe('called by principalPropagation (local.JuniorReader policy limited to ReadCatalog API policy)', () => {
     beforeAll(() => {
       axios.defaults.auth = { username: 'principalPropagation', password: '' }
     })
 
     /**
-     * The JuniorReader policy adds attribute filters for genre to the query:
-     * - access to Catweazle is granted as its genre is Fantasy
-     * - access to The Raven and Eleonora is granted as their genre is Mystery but filtered out by stock < 30 from ReadCatalog policy
+     * The JuniorReader policy restricts to Fairy Tale, Fantasy, and Mystery genres
+     * The ReadCatalog API policy restricts to genres NOT IN (Mystery, Romance, Thriller, Dystopia)
+     * The intersection yields only Fantasy genre books (Mystery is excluded by ReadCatalog), which is Catweazle
      */
     it('/Books should return 1 Book (Catweazle)', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books`
@@ -229,7 +128,7 @@ describe('CatalogService', () => {
       expect(data.value).toContainEqual(expect.objectContaining({ title: 'Catweazle' }))
     })
 
-    // Book 252 = Eleonora
+    // Book 252 = Eleonora (Mystery genre - allowed by JuniorReader but forbidden by ReadCatalog API policy)
     it('/Books/252/getStockedValue() should be forbidden', async () => {
       expect.hasAssertions();
       return (GET`/odata/v4/catalog/Books/252/getStockedValue()`).catch(error => {
@@ -237,8 +136,8 @@ describe('CatalogService', () => {
       })
     })
 
-    // Book 271 = Catweazle
-    it('/Books/271/getStockedValue() should return 7770', async () => {
+    // Book 271 = Catweazle (Fantasy genre - allowed by both policies)
+    it('/Books/271/getStockedValue() should return 3300', async () => {
       const { status, data } = await GET`/odata/v4/catalog/Books/271/getStockedValue()`
       expect(status).toBe(200)
       expect(data.value).toBe(3300)

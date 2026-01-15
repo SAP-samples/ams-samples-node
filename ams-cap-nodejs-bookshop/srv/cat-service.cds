@@ -3,21 +3,18 @@ using { sap.capire.bookshop as my } from '../db/schema';
 service CatalogService {
 
   /** For displaying lists of Books */
-  @ams.attributes: {
-    description: null
-  }
   @readonly entity ListOfBooks as projection on Books
   excluding { descr };
 
   /** For display in details pages */
-  @restrict: [{ grant:['READ'], to: ['Reader', 'Inquisitor'], where: 'stock > 0' }]
+  @restrict: [{ grant:['READ'], to: ['ReadBooks'], where: 'stock > 0' }]
   entity Books as projection on my.Books { *,
     author.name as author
   } excluding { createdBy, modifiedBy }
   actions {
-    @restrict: [{ to: ['Reader'] }]
+    @restrict: [{ to: ['ReadBooks'] }]
     function getStockedValue(book: $self) returns Decimal;
-    @restrict: [{ to: ['Reader'] }]
+    @restrict: [{ to: ['ReadBooks'] }]
     function getTotalStockedValue(books: many $self) returns Decimal;
   };
 

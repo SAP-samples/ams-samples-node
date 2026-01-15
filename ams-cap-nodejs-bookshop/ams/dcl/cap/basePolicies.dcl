@@ -1,16 +1,17 @@
-POLICY "Reader" {
-    ASSIGN ROLE "Reader" WHERE
-        genre           IS NOT RESTRICTED   AND
-        description     IS NOT RESTRICTED   AND
-        stock           IS NOT RESTRICTED;
+POLICY StockManager {
+  ASSIGN ROLE ManageBooks WHERE Genre IS NOT RESTRICTED;
 }
 
-POLICY Inquisitor {
-    ASSIGN ROLE "Inquisitor" WHERE 
-        description     IS NOT RESTRICTED;
+POLICY ContentManager {
+  ASSIGN ROLE ManageAuthors;
+  ASSIGN ROLE ManageBooks;
+  ASSIGN ROLE ValueHelpUser;
 }
 
-POLICY "admin" {
-    ASSIGN ROLE "admin";
+POLICY Reader {
+  ASSIGN ROLE ReadBooks WHERE Genre IS NOT RESTRICTED;
 }
 
+POLICY "ValueHelpUser" {
+	ASSIGN ROLE "ValueHelpUser";
+}

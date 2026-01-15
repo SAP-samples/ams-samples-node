@@ -1,10 +1,6 @@
-INTERNAL Policy AMS_ValueHelp {
-    USE cap.admin;
+INTERNAL POLICY AMS_ValueHelp {
+  ASSIGN ROLE ValueHelpUser;
 }
-
-INTERNAL Policy ReadCatalog {
-    USE cap.Reader RESTRICT 
-        genre           IS NOT RESTRICTED,
-        description     IS NOT RESTRICTED,
-        stock           < 30;
+INTERNAL POLICY ReadCatalog {
+    USE cap.Reader RESTRICT Genre NOT IN ('Mystery', 'Romance', 'Thriller', 'Dystopia');
 }

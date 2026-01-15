@@ -3,9 +3,9 @@ const cds = require('@sap/cds')
 describe('AmsValueHelpService', () => {
   const { GET, axios } = cds.test()
 
-  describe('called by fred (no admin)', () => {
+  describe('called by reader (no ValueHelpUser)', () => {
     beforeAll(() => {
-      axios.defaults.auth = { username: 'fred', password: '' }
+      axios.defaults.auth = { username: 'reader', password: '' }
     })
 
     it('/Genres should return status 403', async () => {
@@ -16,7 +16,19 @@ describe('AmsValueHelpService', () => {
     })
   })
 
-  describe('called by amsValueHelp (admin)', () => {
+  describe('called by content-manager (cap.ContentManager policy grants ValueHelpUser)', () => {
+    beforeAll(() => {
+      axios.defaults.auth = { username: 'content-manager', password: '' }
+    })
+
+    it('/Genres should return all Genres', async () => {
+      const { status, data } = await GET`/odata/v4/ams-value-help/Genres`
+      expect(status).toBe(200)
+      expect(data.value?.length).toBe(15)
+    })
+  })
+
+  describe('called by amsValueHelp (internal AMS_ValueHelp API policy grants ValueHelpUser)', () => {
     beforeAll(() => {
       axios.defaults.auth = { username: 'amsValueHelp', password: '' }
     })

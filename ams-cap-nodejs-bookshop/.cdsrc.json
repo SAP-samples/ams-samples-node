@@ -4,31 +4,29 @@
             "[development]": {
                 "kind": "mocked",
                 "users": {
-                    "bob": {
+                    "content-manager": {
                         "policies": [
-                            "cap.admin",
+                            "cap.ContentManager"
+                        ]
+                    },
+                    "stock-manager": {
+                        "policies": [
+                            "cap.StockManager"
+                        ]
+                    },
+                    "reader": {
+                        "policies": [
                             "cap.Reader"
                         ]
                     },
-                    "carol": {
+                    "stock-manager-fiction": {
                         "policies": [
-                            "local.Zealot"
+                            "local.StockManagerFiction"
                         ]
                     },
-                    "dave": {
+                    "juniorReader": {
                         "policies": [
                             "local.JuniorReader"
-                        ]
-                    },
-                    "erin": {
-                        "policies": [
-                            "local.BestsellerReader"
-                        ]
-                    },
-                    "fred": {
-                        "policies": [
-                            "local.Zealot",
-                            "local.BestsellerReader"
                         ]
                     },
                     "technicalUser": {
@@ -49,7 +47,7 @@
                     },
                     "amsValueHelp": {
                         "policies": [
-                            "cap.admin"
+                            "cap.ContentManager"
                         ],
                         "ias_apis": [
                             "AMS_ValueHelp"
