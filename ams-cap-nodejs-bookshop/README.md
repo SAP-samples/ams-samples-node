@@ -18,7 +18,9 @@ Refer to the [@sap/ams CAP integration guide](https://www.npmjs.com/package/@sap
 - Authentication via SCI (`auth.kind = "ias"`)
 - Authorization via AMS
   - [Role](https://cap.cloud.sap/docs/guides/security/authorization#roles) Assignments
+  - Instance-based authorization with genre-based attribute filters
   - Advanced filter conditions that exceed the capabilities of the standard [instance-based cds conditions](https://cap.cloud.sap/docs/guides/security/authorization#instance-based-auth)
+  - Principal propagation with API policies that further restrict access
 - [Hybrid testing](https://cap.cloud.sap/docs/advanced/hybrid-testing) via `cds bind`
 - Auto-Configuration for deployment via [cds add](https://cap.cloud.sap/docs/tools/cds-cli#cds-add)
 
@@ -43,24 +45,36 @@ DEBUG=ams cds watch       # requires @sap/cds-dk installed globally
 
 ## Testing Locally
 ### Integration tests
-You can look at the integration tests for the [`CatalogService`](./test/cat-service.test.js) and the [`AdminService`](./test/admin-service.test.js). They demonstrate the expected behavior of the application for mocked users with different combinations of authorization policies.
+You can look at the integration tests for the [`CatalogService`](./test/cat-service.test.js), [`AdminService`](./test/admin-service.test.js), and [`AmsValueHelpService`](./test/vh-service.test.js). They demonstrate the expected behavior of the application for mocked users with different combinations of authorization policies.
+
+Advanced AMS capabilities includes in the tests:
+- **Filtered access**: The `juniorReader` can only access books in specific genres (Fairy Tale, Fantasy, Mystery)
+- **Principal propagation**: The `principalPropagation` user demonstrates how API policies can further restrict access for user requests from external applications - combining JuniorReader policy (allows Fairy Tale, Fantasy, Mystery) of user with ReadCatalog API policy (excludes Mystery, Romance, Thriller, Dystopia) results in access to only Fantasy books
 
 ### Manual tests
-To test the effect of changes, you can make manual requests against the server by authenticating via *Basic Auth* as one of the mocked users (and an empty password). In the [cds env configuration](./.cdsrc.json#L4), you can see and change the list of policies that is assigned to the mocked users.
+To test the effect of changes, you can make manual requests against the server by authenticating via *Basic Auth* as one of the mocked users (and an empty password). In the [cds env configuration](./.cdsrc.json), you can see and change the list of policies that is assigned to the mocked users.
 
 If the application was started in watch mode, get creative by making changes and observe the effects. Here's some ideas:
 
 #### Create your own admin policy
-- create a new admin policy in [adminPolicies.dcl](./ams/dcl/local/adminPolicies.dcl) with a different filter condition
-- assign the policy to a user via the [cds env configuration](./.cdsrc.json#L4)
-- validate it works as intended
-  - make a request to an entity that is filtered base on the attributes of the policy
-  - extend the unit tests
+- Create a new policy in [adminPolicies.dcl](./ams/dcl/local/adminPolicies.dcl) with a different genre filter condition
+- Assign the policy to a user via the [cds env configuration](./.cdsrc.json)
+- Validate it works as intended
+  - Make a request to `/odata/v4/catalog/Books` as that user
+  - Verify only books matching the genre filter are returned
+  - Extend the unit tests to cover the new scenario
 
-#### Extend the AMS annotations
-- add more attribute filters via `ams.attributes` annotations
-- extend the role policies in [basePolicies.dcl](./ams/dcl/cap/basePolicies.dcl) if the new AMS attribute is applicable for the existing roles
-- [create an admin policy](#create-your-own-admin-policy) that filters a role based on this attribute
+#### Extend the AMS attributes
+- Add more attribute filters via `@ams.attributes` annotations in [authorization.cds](./srv/authorization.cds)
+  - Example: Add author-based filtering by mapping `Author: author.name`
+- Extend the role policies in [basePolicies.dcl](./ams/dcl/cap/basePolicies.dcl) to additionally filter by the new attribute where it makes sense
+- [Create a new admin policy](#create-your-own-policy) that filters a role based on this attribute
+- Extend the [vh-service.js](./srv/vh-service.js) to return possible values for the new attribute
+
+#### Test principal propagation
+- Observe how the `principalPropagation` user's access is restricted by both the JuniorReader policy AND the ReadCatalog API policy
+- Try creating different combinations of user policies and API policies to see how they interact
+- The intersection of filters determines the final access rights
 
 ## Hybrid Testing
 For [CAP Hybrid Testing](https://cap.cloud.sap/docs/advanced/hybrid-testing), you can `cds bind -2 <yourIdentityServiceInstance>` and start the application via
