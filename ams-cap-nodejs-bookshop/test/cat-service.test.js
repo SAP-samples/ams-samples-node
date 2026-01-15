@@ -3,7 +3,7 @@ const cds = require('@sap/cds')
 describe('CatalogService', () => {
   const { GET, axios } = cds.test()
 
-  describe('called by alice (no Reader)', () => {
+  describe('called by alice (no ReadBooks)', () => {
     beforeAll(() => {
       axios.defaults.auth = { username: 'alice', password: '' }
     })
@@ -23,7 +23,7 @@ describe('CatalogService', () => {
     })
   })
 
-  describe('called by bob (cap.Reader policy assigned)', () => {
+  describe('called by bob (cap.ReadBooks policy assigned)', () => {
     beforeAll(() => {
       axios.defaults.auth = { username: 'bob', password: '' }
     })
