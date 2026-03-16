@@ -21,7 +21,7 @@
     "devDependencies": {
         "@sap/ams-dev": "^2.2.0",
         "@types/express": "^5.0.6",
-        "jest": "^30.2.0",
+        "jest": "^30.3.0",
         "supertest": "^7.2.2"
     }
 }
