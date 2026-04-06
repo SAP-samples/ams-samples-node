@@ -14,7 +14,7 @@
   "devDependencies": {
     "@cap-js/cds-test": "^0.4.1",
     "@sap/ams-dev": "^2.2.0",
-    "@sap/cds-dk": "^9.8.2",
+    "@sap/cds-dk": "^9.8.3",
     "jest": "^30.3.0"
   },
   "scripts": {
