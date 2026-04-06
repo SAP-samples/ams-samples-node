@@ -14,7 +14,7 @@
     "license": "ISC",
     "dependencies": {
         "@sap/ams": "^3.5.1",
-        "@sap/xsenv": "^6.1.0",
+        "@sap/xsenv": "^6.2.0",
         "@sap/xssec": "^4.13.0",
         "express": "^5.2.1"
     },
