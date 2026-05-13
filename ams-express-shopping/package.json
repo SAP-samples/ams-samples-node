@@ -14,14 +14,14 @@
     "license": "ISC",
     "dependencies": {
         "@sap/ams": "^3.7.0",
-        "@sap/xsenv": "^6.1.0",
+        "@sap/xsenv": "^6.2.1",
         "@sap/xssec": "^4.13.0",
         "express": "^5.2.1"
     },
     "devDependencies": {
         "@sap/ams-dev": "^2.2.0",
         "@types/express": "^5.0.6",
-        "jest": "^30.3.0",
+        "jest": "^30.4.2",
         "supertest": "^7.2.2"
     }
 }
