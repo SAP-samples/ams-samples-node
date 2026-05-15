@@ -3,6 +3,9 @@
 
 name: CAP sample
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [ "main" ]
