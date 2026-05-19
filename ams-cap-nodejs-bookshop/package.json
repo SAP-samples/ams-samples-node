@@ -12,7 +12,7 @@
     "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/cds-test": "^0.4.1",
+    "@cap-js/cds-test": "^1.0.1",
     "@sap/ams-dev": "^2.2.0",
     "@sap/cds-dk": "^9.9.1",
     "jest": "^30.4.2"
