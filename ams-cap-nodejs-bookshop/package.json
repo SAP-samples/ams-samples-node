@@ -7,14 +7,14 @@
   "dependencies": {
     "@cap-js/sqlite": "^2.4.0",
     "@sap/ams": "^3.7.0",
-    "@sap/cds": "^9.9.1",
+    "@sap/cds": "^9.9.2",
     "@sap/xssec": "^4",
     "express": "^4"
   },
   "devDependencies": {
     "@cap-js/cds-test": "^1.0.1",
     "@sap/ams-dev": "^2.2.0",
-    "@sap/cds-dk": "^9.9.2",
+    "@sap/cds-dk": "^9.9.3",
     "jest": "^30.4.2"
   },
   "scripts": {
