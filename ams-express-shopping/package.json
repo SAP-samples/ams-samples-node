@@ -15,7 +15,7 @@
     "dependencies": {
         "@sap/ams": "^3.7.0",
         "@sap/xsenv": "^6.2.1",
-        "@sap/xssec": "^4.13.0",
+        "@sap/xssec": "^4.13.1",
         "express": "^5.2.1"
     },
     "devDependencies": {
