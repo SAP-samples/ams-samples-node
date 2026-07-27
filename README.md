@@ -14,7 +14,6 @@ When deployed, authorization policies are managed in the SCI administration cock
 
 ## Requirements
 - a Node.js LTS version that is at least [in maintenance](https://nodejs.org/en/about/previous-releases)
-- a JDK 17+ for local DCL compilation before unit tests
 
 ## How to obtain support
 For bugs and issues of the sample applications themselves or questions about the content, please [create an issue](https://github.com/SAP-samples/ams-samples-node/issues) in this repository.
