@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "@cap-js/sqlite": "^2.4.0",
-    "@sap/ams": "^3.7.0",
+    "@sap/ams": "^3.8.0",
     "@sap/cds": "^9.9.2",
     "@sap/xssec": "^4",
     "express": "^4"
