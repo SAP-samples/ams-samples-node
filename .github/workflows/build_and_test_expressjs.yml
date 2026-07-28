@@ -7,16 +7,11 @@ permissions:
   contents: read
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
-    paths:
-      - "ams-express-shopping/**"
-      - ".github/workflows/build_and_test_expressjs.yml"
   pull_request:
     branches: [ "**" ]
-    paths:
-      - "ams-express-shopping/**"
-      - ".github/workflows/build_and_test_expressjs.yml"
 
 jobs:
   npm:
